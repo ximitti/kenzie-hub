@@ -1,0 +1,98 @@
+#+TITLE: Kenzie Hub
+
+* Sumário
++ [[Introdução ao projeto]]
++ [[Conceitos obrigatórios]]
++ [[Planejamento]]
++ [[Regras de negócio]]
++ [[Criteria]]
+
+
+* Introdução ao projeto
+
+** Documentação da API
+*** link: [[https://gitlab.com/ka-br-out-2020/game-rank-api][API Kenzie Hub]]
+
+
+** Utilizarei 2 endpoints da API:
+*** Criação de usuários.
+**** Users:
+***** POST Create User
+*** Criação, alteração e exclusão de tecnologias relacionadas ao usuário.
+**** Techs:
+***** POST Create
+***** PUT Update
+***** DEL Delete
+
+* Conceitos obrigatórios
+
+** Os principais conceitos serão os abordados até aqui.
+*** Sprint 1:
+**** Componentes.
+***** Componentização.
+**** Props.
+**** Callbacks.
+**** Requisições.
+***** Fetch.
+
+*** Sprint 2:
+**** Rotas.
+***** React Router DOM.
+**** Autenticação.
+***** Tokens, JWT.
+**** Envio de dados para API.
+***** Axios.
+**** Bibliotecas de estilização.
+***** Material-UI, Styled Components, React Icons.
+**** Componentes de formulário.
+***** React Hook Forms, Yup, useHistory.
+**** Hooks.
+***** useState, useEffect.
+
+* Planejamento
+
+1. Quais bibliotecas utilizar?
+   a. [[https://reactrouter.com/][React Router DOM]]
+   b. [[https://react-hook-form.com/][React Hook Form]]
+   c. [[https://github.com/jquense/yup][Yup]]
+   d. [[https://material-ui.com/][Material UI]]
+   e. [[https://github.com/axios/axios][Axios]]
+   f. [[https://styled-components.com/][Styled Components]]
+
+2. Quais páginas o usuário pode acessar sem login?
+
+3. Qual será a estruturação visual da página? Quais bibliotecas de componentes?
+   a. Pasta components.
+   b. Pasta pages.
+      a. Home
+      b. Login
+      c. SignUp
+   c. Pasta routes.
+   d. Pasta services.
+
+4. Estou ciente de quais endpoints irei usar? Quais os verbos http devem ser usados e qual o formato do corpo da requisição?
+   a. Estão na Introdução ao projeto
+
+* Regras de negócio
+
+1. Todos os formulários tem validações para não enviar dados incorretos/inválidos para a API.
+2. O token está sendo salvo no Local Storage da forma correta e sendo utilizado para autenticação do usuário.
+3. O usuário sem autenticação não pode acessar a aplicação CORE.
+
+* Criteria
+
+| Criterias                  | Ratings |
+|----------------------------+---------|
+| Regra de negócio           |       5 |
+| UX/UI                      |       5 |
+| Cadastro de usuário        |       5 |
+| Cadastro de tecnologias    |       5 |
+| Autenticação e autorização |       5 |
+| Feature extra              |       5 |
+|----------------------------+---------|
+
+
+
+#+TODOS: Lista de tarefas
+
+TODO Instalar os pacotes
