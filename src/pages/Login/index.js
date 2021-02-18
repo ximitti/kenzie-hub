@@ -1,5 +1,4 @@
-const Login = () => {
-  return <div>Login</div>;
-};
+import FormLogin from "../../components/FormLogin";
 
+const Login = () => <FormLogin />;
 export default Login;
