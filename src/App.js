@@ -1,13 +1,17 @@
 import "./App.css";
-import { Switch, Route } from "react-router-dom";
-
+import { useState } from "react";
+import Menu from "./components/Menu";
 import Routes from "./routes";
-
+//-----------------------------------------------
 const App = () => {
+  const [isAuth, setIsAuth] = useState(false);
+
   return (
     <div className="App">
+      <Menu isAuth={isAuth} setIsAuth={setIsAuth} />
+
       <header className="App-header">
-        <Routes />
+        <Routes setIsAuth={setIsAuth} />
       </header>
     </div>
   );

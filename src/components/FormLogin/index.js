@@ -16,12 +16,15 @@ import {
 const errorRequired = "Campo obrigatório";
 const schema = yup.object().shape({
   email: yup.string().email().required(errorRequired),
-  password: yup.string().required(errorRequired),
+  password: yup
+    .string()
+    .min(6, "Mínimo de 6 caracteres")
+    .required(errorRequired),
 });
 
 const FormLogin = (props) => {
   const [errorLogin, setErrorLogin] = useState({});
-  const { history } = useHistory();
+  const history = useHistory();
   const { register, handleSubmit, errors, reset } = useForm({
     resolver: yupResolver(schema),
   });
@@ -29,11 +32,11 @@ const FormLogin = (props) => {
   const onLogin = (data) => {
     API.post("/sessions", data)
       .then((response) => {
-        sessionStorage.clear();
-        sessionStorage.setItem("token", JSON.stringify(response.data.token));
+        localStorage.clear();
+        localStorage.setItem("token", JSON.stringify(response.data.token));
         errorLogin.isAxiosError && setErrorLogin({});
         reset();
-        history.push("/signup");
+        history.push("/home");
       })
       .catch((err) => {
         setErrorLogin(err);
@@ -43,11 +46,13 @@ const FormLogin = (props) => {
   return (
     <Container>
       <Box>
-        <Typography variant="h4">Login</Typography>
+        <Typography variant="h4" color="primary">
+          Login
+        </Typography>
       </Box>
       <Box>
         {errorLogin.isAxiosError && (
-          <Typography>E-mail ou senha incorretos</Typography>
+          <Typography color="error">E-mail ou senha incorretos</Typography>
         )}
       </Box>
       <form onSubmit={handleSubmit(onLogin)}>
@@ -77,7 +82,7 @@ const FormLogin = (props) => {
             helperText={errors.password?.message}
           />
         </Box>
-        <Box>
+        <Box m={1.5}>
           <Button variant="contained" color="primary" type="submit">
             Login
           </Button>
