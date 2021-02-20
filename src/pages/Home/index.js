@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
 import API from "../../services";
+import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Profile from "../../components/Profile";
 //----------------------------------------------
@@ -9,7 +9,7 @@ const Home = ({ setIsAuth }) => {
   const history = useHistory();
   const [user, setUser] = useState({});
   const [change, setChange] = useState(false);
-  const [token, setToken] = useState(() => {
+  const [token] = useState(() => {
     const localToken = localStorage.getItem("token") || "";
     if (!localToken) {
       return;
@@ -24,23 +24,29 @@ const Home = ({ setIsAuth }) => {
 
   useEffect(() => {
     if (token) {
-      API.get("/profile", {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-        .then((response) => {
-          console.log(response);
-          setUser(response.data);
-
-          if (change) {
-            setChange(false);
-          }
-        })
-        .catch((e) => console.log(e));
+      getUserData();
     }
     // eslint-disable-next-line
   }, [change]);
 
-  const onChange = () => {
+  const getUserData = async () => {
+
+    const response = await API.get("/profile", {
+      headers: { Authorization: `Bearer ${token}` },
+    }).catch((e) => console.log(e));
+
+    if (response) {
+      await setUser(response.data);
+
+      if (change) {
+        console.log("onChange no Home")
+        await setChange(false);
+      }
+
+    }
+  }
+
+  const onChange = async () => {
     setChange(true);
   };
 

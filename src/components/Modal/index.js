@@ -35,9 +35,13 @@ const ModalTech = ({ create, tech, onChange }) => {
       )}
       <Modal open={open} onClose={handleClose}>
         {create ? (
-          <CreateTech onChange={onChange} tech={tech} />
+          <CreateTech onChange={onChange} close={handleClose} />
         ) : (
-          <ChangeTech onChange={onChange} tech={tech} />
+          <ChangeTech 
+            onChange={onChange} 
+            close={handleClose} 
+            tech={tech} 
+          />
         )}
       </Modal>
     </Box>

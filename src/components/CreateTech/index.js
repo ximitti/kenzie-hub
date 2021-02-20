@@ -1,6 +1,8 @@
-import { useState } from "react";
+import API from "../../services";
+import { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Box, Button } from "@material-ui/core";
+import {useForm, Controller} from "react-hook-form"
+import { Box, TextField, Button, InputLabel, Select, MenuItem, FormControl, Typography } from "@material-ui/core";
 //--------------------------------------------
 const getModalStyle = () => {
   return {
@@ -15,21 +17,106 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     width: 400,
     backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
+    border: "2px solid #3f51b6",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
+  formControl: {
+    minWidth: 250,
+  }
 }));
 //--------------------------------------------
-const CreateTech = ({ onChange, tech }) => {
+const CreateTech = ({ onChange, close }) => {
   const classes = useStyles();
   const [modalStyle] = useState(getModalStyle);
+  const {register, handleSubmit, control} = useForm();
+  const [token, setToken] = useState({})
+
+  useEffect(() => {
+
+    setToken(() => {
+      const localToken = localStorage.getItem("token") || "";
+      if (!localToken) {
+        return;
+      }
+      return JSON.parse(localToken);
+    })
+
+    // eslint-disable-next-line
+  }, [])
+
+  const onSubmit = async (data) => {
+    const response = await API.post(`/users/techs`, data,
+      {headers: { Authorization: `Bearer ${token}` },
+      }).catch((e) => {console.log(e)})
+
+    console.log(response)
+    if (response) {
+      await onChange();
+      await close();
+    }
+  }
 
   return (
     <Box style={modalStyle} className={classes.paper}>
-      <h4>Criar status</h4>
+      <Typography variant="h5">Incluir experiência</Typography>
       <Box>
-        <Button>Criar</Button>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Box>
+            <FormControl
+              className={classes.formControl}
+              margin="normal"
+            >
+              <TextField
+                name="title"
+                label="Tecnologia"
+                variant="outlined"
+                size="small"
+                inputRef={register}
+              />
+            </FormControl>
+          </Box>
+          <Box>
+            <FormControl
+              className={classes.formControl}
+              variant="outlined"
+              margin="normal"
+              size="small"
+            >
+              <InputLabel id="status-label">
+                Experiência
+              </InputLabel>
+              <Controller
+                name="status"
+                control={control}
+                as={
+                  <Select labelId="status-label" id="status" label="Experiência">
+                    <MenuItem value="">
+                      ---
+                    </MenuItem>
+                    <MenuItem value="Iniciante">
+                      Iniciante
+                    </MenuItem>
+                    <MenuItem value="Intermediário">
+                      Intermediário
+                    </MenuItem>
+                    <MenuItem value="Avançado">
+                      Avançado
+                    </MenuItem>
+                  </Select>
+                }/>
+            </FormControl>
+          </Box>
+          <Box m={1.5}>
+            <Button 
+              variant="contained" 
+              color="primary" 
+              type="submit"
+            >
+              Incluir
+            </Button>
+          </Box>
+        </form>
       </Box>
     </Box>
   );
