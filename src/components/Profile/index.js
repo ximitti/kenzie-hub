@@ -1,5 +1,10 @@
-import { Box, Container, Typography, Button } from "@material-ui/core";
-const Profile = ({ user }) => {
+import Techs from "../Techs";
+import { Box, Container, Typography, IconButton } from "@material-ui/core";
+import AddBoxIcon from "@material-ui/icons/AddBox";
+//---------------------------------------------------------------------
+
+//---------------------------------------------------------------------
+const Profile = ({ user, onChange }) => {
   return (
     <Container>
       <Box m={3} mx="auto" width={1 / 2} textAlign="left">
@@ -42,25 +47,27 @@ const Profile = ({ user }) => {
           </Typography>
         </Box>
         <Box bgcolor="grey.200" p={1.5} boxShadow={1}>
-          <Typography color="textPrimary">{user.bio}</Typography>
+          <Typography variant="body2" color="textPrimary">
+            {user.bio}
+          </Typography>
         </Box>
       </Box>
       <Box m={3} mx="auto" width={1 / 2} textAlign="left">
-        <Box>
-          <Typography variant="h5" color="primary">
-            Tecnologias
-          </Typography>
+        <Box display="flex" alignItems="center">
+          <Box>
+            <Typography variant="h5" color="primary">
+              Tecnologias
+            </Typography>
+          </Box>
+          <Box mx={1.5}>
+            <IconButton color="primary">
+              <AddBoxIcon fontSize="small" />
+            </IconButton>
+          </Box>
         </Box>
         <Box bgcolor="grey.200" p={1.5} boxShadow={1}>
           {user.techs?.map((tech, index) => (
-            <Box key={index} display="flex" justifyContent="space-around">
-              <Typography align="left" color="textPrimary" display="block">
-                {tech.title}
-              </Typography>
-              <Typography color="textPrimary" display="block">
-                {tech.status}
-              </Typography>
-            </Box>
+            <Techs key={index} techData={tech} onChange={onChange} />
           ))}
         </Box>
       </Box>

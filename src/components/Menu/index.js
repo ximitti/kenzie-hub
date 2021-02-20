@@ -1,8 +1,15 @@
-import { AppBar, Toolbar, MenuItem } from "@material-ui/core/";
-
+import { Box, AppBar, Toolbar, MenuItem, Typography } from "@material-ui/core/";
+import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
-
+//----------------------------------------------------------------------
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+}));
+//----------------------------------------------------------------------
 const Menu = ({ isAuth, setIsAuth }) => {
+  const classes = useStyles();
   const history = useHistory();
 
   const sendTo = (path) => {
@@ -16,21 +23,28 @@ const Menu = ({ isAuth, setIsAuth }) => {
   };
 
   return (
-    <AppBar position="static">
-      <Toolbar>
-        {isAuth ? (
-          <>
-            <MenuItem onClick={() => sendTo("/home")}>Home</MenuItem>
-            <MenuItem onClick={handleCloseApplication}>Sair</MenuItem>
-          </>
-        ) : (
-          <>
-            <MenuItem onClick={() => sendTo("/")}>Login</MenuItem>
-            <MenuItem onClick={() => sendTo("/signup")}>Registro</MenuItem>
-          </>
-        )}
-      </Toolbar>
-    </AppBar>
+    <Box className={classes.root}>
+      <AppBar position="static">
+        <Toolbar>
+          <Box display="flex" justifyContent="flex-start" minWidth="165px">
+            {isAuth ? (
+              <>
+                <MenuItem onClick={() => sendTo("/home")}>Home</MenuItem>
+                <MenuItem onClick={handleCloseApplication}>Sair</MenuItem>
+              </>
+            ) : (
+              <>
+                <MenuItem onClick={() => sendTo("/")}>Login</MenuItem>
+                <MenuItem onClick={() => sendTo("/signup")}>Registro</MenuItem>
+              </>
+            )}
+          </Box>
+          <Box flexGrow={1} pr="150px">
+            <Typography variant="h6">KENZIE HUB</Typography>
+          </Box>
+        </Toolbar>
+      </AppBar>
+    </Box>
   );
 };
 

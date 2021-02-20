@@ -3,9 +3,12 @@ import API from "../../services";
 import { useHistory } from "react-router-dom";
 import Profile from "../../components/Profile";
 //----------------------------------------------
+
+//----------------------------------------------
 const Home = ({ setIsAuth }) => {
   const history = useHistory();
   const [user, setUser] = useState({});
+  const [change, setChange] = useState(false);
   const [token, setToken] = useState(() => {
     const localToken = localStorage.getItem("token") || "";
     if (!localToken) {
@@ -15,6 +18,10 @@ const Home = ({ setIsAuth }) => {
     return JSON.parse(localToken);
   });
 
+  if (!token) {
+    history.push("/signup");
+  }
+
   useEffect(() => {
     if (token) {
       API.get("/profile", {
@@ -23,18 +30,21 @@ const Home = ({ setIsAuth }) => {
         .then((response) => {
           console.log(response);
           setUser(response.data);
+
+          if (change) {
+            setChange(false);
+          }
         })
         .catch((e) => console.log(e));
     }
     // eslint-disable-next-line
-  }, []);
+  }, [change]);
 
-  if (!token) {
-    console.log(token);
-    history.push("/signup");
-  }
+  const onChange = () => {
+    setChange(true);
+  };
 
-  return <Profile user={user} />;
+  return <Profile user={user} onChange={onChange} />;
 };
 
 export default Home;

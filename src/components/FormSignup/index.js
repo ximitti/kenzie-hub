@@ -22,7 +22,7 @@ import {
 
 const errorRequired = "Campo obrigatório";
 const schema = yup.object().shape({
-  email: yup.string().required(errorRequired),
+  email: yup.string().email("Formato ***@***").required(errorRequired),
   password: yup
     .string()
     .min(6, "Senha deve ter 6 dígitos, no mínimo")
