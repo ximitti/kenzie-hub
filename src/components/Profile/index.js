@@ -1,6 +1,6 @@
 import Techs from "../Techs";
 import { Box, Container, Typography, IconButton } from "@material-ui/core";
-import AddBoxIcon from "@material-ui/icons/AddBox";
+import ModalTech from "../Modal";
 //---------------------------------------------------------------------
 
 //---------------------------------------------------------------------
@@ -60,9 +60,7 @@ const Profile = ({ user, onChange }) => {
             </Typography>
           </Box>
           <Box mx={1.5}>
-            <IconButton color="primary">
-              <AddBoxIcon fontSize="small" />
-            </IconButton>
+            <ModalTech create={true} onChange={onChange} />
           </Box>
         </Box>
         <Box bgcolor="grey.200" p={1.5} boxShadow={1}>
