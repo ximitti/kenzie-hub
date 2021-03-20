@@ -1,8 +1,18 @@
-import API from "../../services";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {useForm, Controller} from "react-hook-form"
-import { Box, Button, InputLabel, Select, MenuItem, FormControl, Typography } from "@material-ui/core";
+import { useForm, Controller } from "react-hook-form";
+import {
+  Box,
+  Button,
+  InputLabel,
+  Select,
+  MenuItem,
+  FormControl,
+  Typography,
+} from "@material-ui/core";
+
+// providers
+import { useUser } from "../../provider/user";
 //--------------------------------------------
 const getModalStyle = () => {
   return {
@@ -23,38 +33,20 @@ const useStyles = makeStyles((theme) => ({
   },
   formControl: {
     minWidth: 250,
-  }
+  },
 }));
 //--------------------------------------------
-const ChangeTech = ({ onChange, close, tech }) => {
+const ChangeTech = ({ close, tech }) => {
   const classes = useStyles();
-  const [ modalStyle ] = useState(getModalStyle);
-  const [ token, setToken ] = useState({})
-  const { handleSubmit,control } = useForm()
+  const { onChangeTech } = useUser();
+  const [modalStyle] = useState(getModalStyle);
+  const { handleSubmit, control } = useForm();
 
-  useEffect(() => {
+  const onSubmit = (data) => {
+    onChangeTech(data, tech.id);
 
-    setToken(() => {
-      const localToken = localStorage.getItem("token") || "";
-      if (!localToken) {
-        return;
-      }
-      return JSON.parse(localToken);
-    })
-
-    // eslint-disable-next-line
-  }, [])
-
-  const onSubmit = async (data) => {
-    const response = await API.put(`/users/techs/${tech.id}`, data,
-      {headers: { Authorization: `Bearer ${token}` },
-      }).catch((e) => {console.log(e)})
-
-    if (response) {
-      await onChange();
-      close();
-    }
-  }
+    close();
+  };
 
   return (
     <Box style={modalStyle} className={classes.paper}>
@@ -67,31 +59,24 @@ const ChangeTech = ({ onChange, close, tech }) => {
             margin="normal"
             size="small"
           >
-            <InputLabel id="status-label">
-              Experiência
-            </InputLabel>
+            <InputLabel id="status-label">Experiência</InputLabel>
             <Controller
               name="status"
               control={control}
               as={
                 <Select labelId="status-label" id="status" label="Experiência">
-                  <MenuItem value="">
-                    ---
-                  </MenuItem>
-                  <MenuItem value="Iniciante">
-                    Iniciante
-                  </MenuItem>
-                  <MenuItem value="Intermediário">
-                    Intermediário
-                  </MenuItem>
-                  <MenuItem value="Avançado">
-                    Avançado
-                  </MenuItem>
+                  <MenuItem value="">---</MenuItem>
+                  <MenuItem value="Iniciante">Iniciante</MenuItem>
+                  <MenuItem value="Intermediário">Intermediário</MenuItem>
+                  <MenuItem value="Avançado">Avançado</MenuItem>
                 </Select>
-              }/>
+              }
+            />
           </FormControl>
           <Box m={1.5}>
-            <Button variant="contained" color="primary" type="submit">Alterar</Button>
+            <Button variant="contained" color="primary" type="submit">
+              Alterar
+            </Button>
           </Box>
         </form>
       </Box>

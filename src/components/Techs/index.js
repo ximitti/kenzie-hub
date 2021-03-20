@@ -1,36 +1,17 @@
-import { useState, useEffect } from "react";
-import API from "../../services";
 import { Box, Typography, IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ModalTech from "../Modal";
+
+// providers
+import { useUser } from "../../provider/user";
 //----------------------------------------------------------
 
 //----------------------------------------------------------
-const Techs = ({ techData, onChange }) => {
-  const [tech] = useState(techData);
-  const [token] = useState(() => {
-    const localToken = localStorage.getItem("token") || "";
-    if (!localToken) {
-      return;
-    }
-    return JSON.parse(localToken);
-  })
-
-  useEffect(() => {
-
-    console.log("Token no comp Tech ", token)
-
-  // eslint-disable-next-line
-  }, [tech])
+const Techs = ({ tech }) => {
+  const { onDeleteTech } = useUser();
 
   const onDelete = async () => {
-    const response = await API.delete(`/users/techs/${tech.id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    }).catch((e) => console.log(e));
-
-    if (response) {
-      await onChange();
-    }
+    onDeleteTech(tech.id);
   };
 
   return (
@@ -42,7 +23,7 @@ const Techs = ({ techData, onChange }) => {
         <Typography color="textPrimary">{tech.status}</Typography>
       </Box>
       <Box>
-        <ModalTech create={false} tech={tech} onChange={onChange} />
+        <ModalTech tech={tech} />
       </Box>
       <Box>
         <IconButton onClick={onDelete} araia-label="delete">

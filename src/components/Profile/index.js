@@ -1,10 +1,21 @@
+import { useEffect } from "react";
 import Techs from "../Techs";
 import { Box, Container, Typography } from "@material-ui/core";
 import ModalTech from "../Modal";
+
+// providers
+import { useUser } from "../../provider/user";
 //---------------------------------------------------------------------
 
 //---------------------------------------------------------------------
-const Profile = ({ user, onChange }) => {
+const Profile = () => {
+  const { user, getUserData } = useUser();
+
+  useEffect(() => {
+    getUserData();
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <Container>
       <Box m={3} mx="auto" width={1 / 2} textAlign="left">
@@ -60,12 +71,12 @@ const Profile = ({ user, onChange }) => {
             </Typography>
           </Box>
           <Box mx={1.5}>
-            <ModalTech create={true} tech={user} onChange={onChange} />
+            <ModalTech create />
           </Box>
         </Box>
         <Box bgcolor="grey.200" p={1.5} boxShadow={1}>
           {user.techs?.map((tech, index) => (
-            <Techs key={index} techData={tech} onChange={onChange} />
+            <Techs key={index} tech={tech} />
           ))}
         </Box>
       </Box>

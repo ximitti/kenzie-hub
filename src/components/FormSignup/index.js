@@ -54,26 +54,22 @@ const FormSignup = () => {
     resolver: yupResolver(schema),
   });
 
-  const onSignup = (data) => {
-    API.post("/users", data)
-      .then((response) => {
-        reset();
-        history.push("/");
-      })
-      .catch((err) => {
-        setErrorSignup(err);
-      });
+  const onSignup = async (data) => {
+    try {
+      await API.post("/users/", data);
+
+      reset();
+      history.push("/");
+    } catch (error) {
+      setErrorSignup(error);
+    }
   };
 
   //------------------------------------------------------
   return (
     <Container>
       <Box>
-        <Typography
-          /* className={classes.colorPrimary} */
-          variant="h4"
-          color="primary"
-        >
+        <Typography variant="h4" color="primary">
           Registro
         </Typography>
       </Box>

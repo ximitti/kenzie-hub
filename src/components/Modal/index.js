@@ -7,7 +7,7 @@ import CreateTech from "../CreateTech";
 //--------------------------------------------
 
 // -------------------------------------------
-const ModalTech = ({ create, tech, onChange }) => {
+const ModalTech = ({ create = false, tech }) => {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -35,13 +35,9 @@ const ModalTech = ({ create, tech, onChange }) => {
       )}
       <Modal open={open} onClose={handleClose}>
         {create ? (
-          <CreateTech onChange={onChange} close={handleClose} />
+          <CreateTech close={handleClose} />
         ) : (
-          <ChangeTech 
-            onChange={onChange} 
-            close={handleClose} 
-            tech={tech} 
-          />
+          <ChangeTech close={handleClose} tech={tech} />
         )}
       </Modal>
     </Box>

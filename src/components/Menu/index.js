@@ -1,6 +1,9 @@
 import { Box, AppBar, Toolbar, MenuItem, Typography } from "@material-ui/core/";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
+
+// provider
+import { useAuth } from "../../provider/authentication";
 //----------------------------------------------------------------------
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -8,7 +11,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 //----------------------------------------------------------------------
-const Menu = ({ isAuth, setIsAuth }) => {
+const Menu = () => {
+  const { isAuth, setIsAuth } = useAuth();
   const classes = useStyles();
   const history = useHistory();
 

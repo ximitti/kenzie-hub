@@ -13,6 +13,10 @@ import {
   Typography,
 } from "@material-ui/core";
 
+// providers
+import { useAuth } from "../../provider/authentication";
+
+// ---------------------------------------------
 const errorRequired = "Campo obrigatório";
 const schema = yup.object().shape({
   email: yup.string().email().required(errorRequired),
@@ -22,25 +26,31 @@ const schema = yup.object().shape({
     .required(errorRequired),
 });
 
-const FormLogin = (props) => {
+// ---------------------------------------
+const FormLogin = () => {
+  const { setToken, setIsAuth } = useAuth();
   const [errorLogin, setErrorLogin] = useState({});
   const history = useHistory();
   const { register, handleSubmit, errors, reset } = useForm({
     resolver: yupResolver(schema),
   });
 
-  const onLogin = (data) => {
-    API.post("/sessions", data)
-      .then((response) => {
-        localStorage.clear();
-        localStorage.setItem("token", JSON.stringify(response.data.token));
-        errorLogin.isAxiosError && setErrorLogin({});
-        reset();
-        history.push("/home");
-      })
-      .catch((err) => {
-        setErrorLogin(err);
-      });
+  const onLogin = async (data) => {
+    try {
+      const response = await API.post("/sessions/", data);
+
+      setToken(response.data.token);
+      setIsAuth(true);
+
+      localStorage.clear();
+      localStorage.setItem("token", JSON.stringify(response.data.token));
+      errorLogin.isAxiosError && setErrorLogin({});
+
+      reset();
+      history.push("/home");
+    } catch (error) {
+      setErrorLogin(error);
+    }
   };
 
   return (

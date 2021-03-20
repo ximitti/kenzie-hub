@@ -1,8 +1,20 @@
-import API from "../../services";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {useForm, Controller} from "react-hook-form"
-import { Box, TextField, Button, InputLabel, Select, MenuItem, FormControl, Typography } from "@material-ui/core";
+import { useForm, Controller } from "react-hook-form";
+import {
+  Box,
+  TextField,
+  Button,
+  InputLabel,
+  Select,
+  MenuItem,
+  FormControl,
+  Typography,
+} from "@material-ui/core";
+
+// providers
+import { useUser } from "../../provider/user";
+
 //--------------------------------------------
 const getModalStyle = () => {
   return {
@@ -23,39 +35,20 @@ const useStyles = makeStyles((theme) => ({
   },
   formControl: {
     minWidth: 250,
-  }
+  },
 }));
 //--------------------------------------------
-const CreateTech = ({ onChange, close }) => {
+const CreateTech = ({ close }) => {
   const classes = useStyles();
+  const { onCreateTech } = useUser();
   const [modalStyle] = useState(getModalStyle);
-  const {register, handleSubmit, control} = useForm();
-  const [token, setToken] = useState({})
+  const { register, handleSubmit, control } = useForm();
 
-  useEffect(() => {
+  const onSubmit = (data) => {
+    onCreateTech(data);
 
-    setToken(() => {
-      const localToken = localStorage.getItem("token") || "";
-      if (!localToken) {
-        return;
-      }
-      return JSON.parse(localToken);
-    })
-
-    // eslint-disable-next-line
-  }, [])
-
-  const onSubmit = async (data) => {
-    const response = await API.post(`/users/techs`, data,
-      {headers: { Authorization: `Bearer ${token}` },
-      }).catch((e) => {console.log(e)})
-
-    console.log(response)
-    if (response) {
-      await onChange();
-      await close();
-    }
-  }
+    close();
+  };
 
   return (
     <Box style={modalStyle} className={classes.paper}>
@@ -63,10 +56,7 @@ const CreateTech = ({ onChange, close }) => {
       <Box>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box>
-            <FormControl
-              className={classes.formControl}
-              margin="normal"
-            >
+            <FormControl className={classes.formControl} margin="normal">
               <TextField
                 name="title"
                 label="Tecnologia"
@@ -83,36 +73,27 @@ const CreateTech = ({ onChange, close }) => {
               margin="normal"
               size="small"
             >
-              <InputLabel id="status-label">
-                Experiência
-              </InputLabel>
+              <InputLabel id="status-label">Experiência</InputLabel>
               <Controller
                 name="status"
                 control={control}
                 as={
-                  <Select labelId="status-label" id="status" label="Experiência">
-                    <MenuItem value="">
-                      ---
-                    </MenuItem>
-                    <MenuItem value="Iniciante">
-                      Iniciante
-                    </MenuItem>
-                    <MenuItem value="Intermediário">
-                      Intermediário
-                    </MenuItem>
-                    <MenuItem value="Avançado">
-                      Avançado
-                    </MenuItem>
+                  <Select
+                    labelId="status-label"
+                    id="status"
+                    label="Experiência"
+                  >
+                    <MenuItem value="">---</MenuItem>
+                    <MenuItem value="Iniciante">Iniciante</MenuItem>
+                    <MenuItem value="Intermediário">Intermediário</MenuItem>
+                    <MenuItem value="Avançado">Avançado</MenuItem>
                   </Select>
-                }/>
+                }
+              />
             </FormControl>
           </Box>
           <Box m={1.5}>
-            <Button 
-              variant="contained" 
-              color="primary" 
-              type="submit"
-            >
+            <Button variant="contained" color="primary" type="submit">
               Incluir
             </Button>
           </Box>
