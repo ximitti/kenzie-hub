@@ -1,10 +1,20 @@
+// react
 import { useState } from "react";
+
+// react router dom
 import { useHistory } from "react-router-dom";
+
+// react hook form + resolvers
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+
+// axios
 import API from "../../services";
+
+// helpers
 import { ModulesText } from "./helper";
+
+// material ui
 import {
   Container,
   Box,
@@ -18,20 +28,13 @@ import {
   makeStyles,
 } from "@material-ui/core";
 
-//--------------------------------------------------------
+// endpoints
+import { postSignUp } from "../../services/endpoints";
 
-const errorRequired = "Campo obrigatório";
-const schema = yup.object().shape({
-  email: yup.string().email("Formato ***@***").required(errorRequired),
-  password: yup
-    .string()
-    .min(6, "Senha deve ter 6 dígitos, no mínimo")
-    .required(errorRequired),
-  name: yup.string().required(errorRequired),
-  bio: yup.string().required(errorRequired),
-  contact: yup.string().required(errorRequired),
-  course_module: yup.string().required(errorRequired),
-});
+// schema
+import { schemaRegister } from "../../services/formValidations";
+
+//--------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -51,12 +54,12 @@ const FormSignup = () => {
   const classes = useStyles();
   const history = useHistory();
   const { register, handleSubmit, control, errors, reset } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schemaRegister),
   });
 
   const onSignup = async (data) => {
     try {
-      await API.post("/users/", data);
+      await API.post(postSignUp, data);
 
       reset();
       history.push("/");

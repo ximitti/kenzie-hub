@@ -1,8 +1,17 @@
 // react
 import { createContext, useContext, useState } from "react";
 
-// API
+// axios
 import API from "../../services";
+
+// endpoints
+import {
+  bearer,
+  getUser,
+  postCreateTech,
+  delTech,
+  putTech,
+} from "../../services/endpoints";
 
 // providers
 import { useAuth } from "../authentication";
@@ -17,9 +26,7 @@ export const UserProvider = ({ children }) => {
 
   const getUserData = async () => {
     try {
-      const response = await API.get("/profile/", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await API.get(getUser(), bearer(token));
 
       setUser(response.data);
     } catch (error) {
@@ -29,9 +36,7 @@ export const UserProvider = ({ children }) => {
 
   const onCreateTech = async (data) => {
     try {
-      await API.post(`/users/techs/`, data, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await API.post(postCreateTech, data, bearer(token));
 
       getUserData();
     } catch (e) {
@@ -41,9 +46,7 @@ export const UserProvider = ({ children }) => {
 
   const onDeleteTech = async (techId) => {
     try {
-      await API.delete(`/users/techs/${techId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await API.delete(delTech(techId), bearer(token));
 
       getUserData();
     } catch (error) {
@@ -53,9 +56,7 @@ export const UserProvider = ({ children }) => {
 
   const onChangeTech = async (data, techId) => {
     try {
-      await API.put(`/users/techs/${techId}/`, data, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await API.put(putTech(techId), data, bearer(token));
 
       getUserData();
     } catch (e) {
@@ -79,4 +80,5 @@ export const UserProvider = ({ children }) => {
   );
 };
 
+// cria o hook
 export const useUser = () => useContext(UserContext);

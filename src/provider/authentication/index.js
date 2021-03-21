@@ -8,7 +8,7 @@ const AuthContext = createContext();
 // -----------------------------------
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(
-    () => JSON.parse(localStorage.getItem("token")) || ""
+    () => JSON.parse(localStorage.getItem("token")) || null
   );
   const [isAuth, setIsAuth] = useState(() => (token ? true : false));
 

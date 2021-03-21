@@ -1,4 +1,11 @@
-import { Box, AppBar, Toolbar, MenuItem, Typography } from "@material-ui/core/";
+import {
+  Box,
+  AppBar,
+  Toolbar,
+  MenuItem,
+  Typography,
+  Divider,
+} from "@material-ui/core/";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
 
@@ -12,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 //----------------------------------------------------------------------
 const Menu = () => {
-  const { isAuth, setIsAuth } = useAuth();
+  const { isAuth, setIsAuth, setToken } = useAuth();
   const classes = useStyles();
   const history = useHistory();
 
@@ -22,6 +29,7 @@ const Menu = () => {
 
   const handleCloseApplication = () => {
     localStorage.clear();
+    setToken(null);
     setIsAuth(false);
     sendTo("/");
   };
@@ -42,6 +50,10 @@ const Menu = () => {
                 <MenuItem onClick={() => sendTo("/signup")}>Registro</MenuItem>
               </>
             )}
+            <Divider orientation="vertical" flexItem />
+            <MenuItem onClick={() => sendTo("/userlist")}>
+              Lista de usuários
+            </MenuItem>
           </Box>
           <Box flexGrow={1} pr="150px">
             <Typography variant="h6">KENZIE HUB</Typography>

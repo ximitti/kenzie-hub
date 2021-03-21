@@ -7,7 +7,7 @@ import { useUser } from "../../provider/user";
 //----------------------------------------------------------
 
 //----------------------------------------------------------
-const Techs = ({ tech }) => {
+const Techs = ({ tech, home = false }) => {
   const { onDeleteTech } = useUser();
 
   const onDelete = async () => {
@@ -22,14 +22,18 @@ const Techs = ({ tech }) => {
       <Box mx={2}>
         <Typography color="textPrimary">{tech.status}</Typography>
       </Box>
-      <Box>
-        <ModalTech tech={tech} />
-      </Box>
-      <Box>
-        <IconButton onClick={onDelete} araia-label="delete">
-          <DeleteIcon fontSize="small" />
-        </IconButton>
-      </Box>
+      {home && (
+        <>
+          <Box>
+            <ModalTech tech={tech} />
+          </Box>
+          <Box>
+            <IconButton onClick={onDelete} araia-label="delete">
+              <DeleteIcon fontSize="small" />
+            </IconButton>
+          </Box>
+        </>
+      )}
     </Box>
   );
 };

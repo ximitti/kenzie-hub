@@ -1,10 +1,17 @@
+// react
 import { useState } from "react";
+
+// react router dom
 import { useHistory } from "react-router-dom";
+
+// react hook form + resolver
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+
+// axios
 import API from "../../services";
 
+// material ui
 import {
   Container,
   Box,
@@ -16,15 +23,11 @@ import {
 // providers
 import { useAuth } from "../../provider/authentication";
 
-// ---------------------------------------------
-const errorRequired = "Campo obrigatório";
-const schema = yup.object().shape({
-  email: yup.string().email().required(errorRequired),
-  password: yup
-    .string()
-    .min(6, "Mínimo de 6 caracteres")
-    .required(errorRequired),
-});
+// schema
+import { schemaLogin } from "../../services/formValidations";
+
+// endpoint
+import { postSignIn } from "../../services/endpoints";
 
 // ---------------------------------------
 const FormLogin = () => {
@@ -32,12 +35,12 @@ const FormLogin = () => {
   const [errorLogin, setErrorLogin] = useState({});
   const history = useHistory();
   const { register, handleSubmit, errors, reset } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schemaLogin),
   });
 
   const onLogin = async (data) => {
     try {
-      const response = await API.post("/sessions/", data);
+      const response = await API.post(postSignIn(), data);
 
       setToken(response.data.token);
       setIsAuth(true);

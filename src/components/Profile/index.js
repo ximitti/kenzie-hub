@@ -1,24 +1,36 @@
-import { useEffect } from "react";
+// material ui
+import { Box, Container, Typography, IconButton } from "@material-ui/core";
+import CancelIcon from "@material-ui/icons/Cancel";
+
+// components
 import Techs from "../Techs";
-import { Box, Container, Typography } from "@material-ui/core";
 import ModalTech from "../Modal";
-
-// providers
-import { useUser } from "../../provider/user";
 //---------------------------------------------------------------------
 
 //---------------------------------------------------------------------
-const Profile = () => {
-  const { user, getUserData } = useUser();
-
-  useEffect(() => {
-    getUserData();
-    // eslint-disable-next-line
-  }, []);
-
+const Profile = ({ user, home = false, close = false }) => {
   return (
-    <Container>
+    <Container
+      style={{
+        backgroundColor: "white",
+        maxWidth: "800px",
+        width: "100%",
+        padding: "1rem",
+      }}
+    >
       <Box m={3} mx="auto" width={1 / 2} textAlign="left">
+        <>
+          {close && (
+            <div style={{ position: "relative", padding: "0.3rem" }}>
+              <IconButton
+                onClick={close}
+                style={{ position: "absolute", right: "0" }}
+              >
+                <CancelIcon />
+              </IconButton>
+            </div>
+          )}
+        </>
         <Box>
           <Typography variant="h5" color="primary">
             Perfil
@@ -70,13 +82,15 @@ const Profile = () => {
               Tecnologias
             </Typography>
           </Box>
-          <Box mx={1.5}>
-            <ModalTech create />
-          </Box>
+          {home && (
+            <Box mx={1.5}>
+              <ModalTech create />
+            </Box>
+          )}
         </Box>
         <Box bgcolor="grey.200" p={1.5} boxShadow={1}>
           {user.techs?.map((tech, index) => (
-            <Techs key={index} tech={tech} />
+            <Techs key={index} tech={tech} home={home} />
           ))}
         </Box>
       </Box>
