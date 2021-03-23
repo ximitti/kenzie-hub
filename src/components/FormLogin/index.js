@@ -12,13 +12,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import API from "../../services";
 
 // material ui
-import {
-  Container,
-  Box,
-  TextField,
-  Button,
-  Typography,
-} from "@material-ui/core";
+import { Box, TextField, Button, Typography } from "@material-ui/core";
 
 // providers
 import { useAuth } from "../../provider/authentication";
@@ -29,8 +23,12 @@ import { schemaLogin } from "../../services/formValidations";
 // endpoint
 import { postSignIn } from "../../services/endpoints";
 
+// styles
+import { useFormStyles } from "../../styles/makeStyles";
+
 // ---------------------------------------
 const FormLogin = () => {
+  const classes = useFormStyles();
   const { setToken, setIsAuth } = useAuth();
   const [errorLogin, setErrorLogin] = useState({});
   const history = useHistory();
@@ -57,7 +55,7 @@ const FormLogin = () => {
   };
 
   return (
-    <Container>
+    <div>
       <Box>
         <Typography variant="h4" color="primary">
           Login
@@ -69,39 +67,36 @@ const FormLogin = () => {
         )}
       </Box>
       <form onSubmit={handleSubmit(onLogin)}>
-        <Box>
-          <TextField
-            margin="normal"
-            variant="outlined"
-            label="E-mail cadastrado"
-            type="email"
-            name="email"
-            size="small"
-            inputRef={register}
-            error={!!errors.email}
-            helperText={errors.email?.message}
-          />
-        </Box>
-        <Box>
-          <TextField
-            margin="normal"
-            variant="outlined"
-            label="Senha"
-            type="password"
-            name="password"
-            size="small"
-            inputRef={register}
-            error={!!errors.password}
-            helperText={errors.password?.message}
-          />
-        </Box>
-        <Box m={1.5}>
-          <Button variant="contained" color="primary" type="submit">
-            Login
-          </Button>
-        </Box>
+        <TextField
+          className={classes.inputStyles}
+          variant="outlined"
+          label="E-mail cadastrado"
+          type="email"
+          name="email"
+          inputRef={register}
+          error={!!errors.email}
+          helperText={errors.email?.message}
+        />
+        <TextField
+          className={classes.inputStyles}
+          variant="outlined"
+          label="Senha"
+          type="password"
+          name="password"
+          inputRef={register}
+          error={!!errors.password}
+          helperText={errors.password?.message}
+        />
+        <Button
+          className={classes.buttonStyles}
+          variant="contained"
+          color="primary"
+          type="submit"
+        >
+          Login
+        </Button>
       </form>
-    </Container>
+    </div>
   );
 };
 

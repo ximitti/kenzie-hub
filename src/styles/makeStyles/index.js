@@ -7,28 +7,23 @@ export const useMenuStyles = makeStyles((theme) => ({
     height: "56px",
   },
   menuMobile: {
-    [theme.breakpoints.down("sm")]: {
-      display: "flex",
-    },
+    display: "flex",
+    minWidth: "30%",
+
     [theme.breakpoints.up("sm")]: {
       display: "none",
     },
   },
   menuDesktop: {
-    [theme.breakpoints.down("sm")]: {
-      display: "none",
-    },
+    display: "none",
+
     [theme.breakpoints.up("sm")]: {
       display: "flex",
-      minWidth: "165px",
+      minWidth: "45%",
     },
   },
   menuTitle: {
     flexGrow: "1",
-    textAlign: "center",
-    [theme.breakpoints.up("sm")]: {
-      paddingRight: "150px",
-    },
   },
 }));
 
@@ -49,6 +44,10 @@ export const useProfileStyles = makeStyles((theme) => ({
     width: "100%",
     margin: "1rem auto",
     textAlign: "left",
+  },
+  textStyles: {
+    textOverflow: "ellipsis",
+    overflow: "hidden",
   },
 }));
 
@@ -89,5 +88,103 @@ export const useUserModalStyles = makeStyles((theme) => ({
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
+  },
+  perfilStyles: {
+    width: "100%",
+    margin: "1rem auto",
+    textAlign: "left",
+  },
+  textStyles: {
+    textOverflow: "ellipsis",
+    overflow: "hidden",
+  },
+}));
+
+export const useListStyles = makeStyles((theme) => ({
+  root: {
+    backgroundColor: "#fff",
+    display: "flex",
+    flexFlow: "column nowrap",
+    alignItems: "center",
+    padding: "0.5rem",
+    maxWidth: "320px",
+    width: "100%",
+    margin: "0 auto",
+
+    [theme.breakpoints.up("sm")]: {
+      maxWidth: "800px",
+    },
+  },
+  pageStyles: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    margin: "1rem auto",
+  },
+  arrowStyles: {
+    "& :hover": {
+      cursor: "pointer",
+    },
+  },
+  listStyles: {
+    display: "flex",
+    flexFlow: "column nowrap",
+    width: "100%",
+    maxWidth: "300px",
+    padding: "0.5rem",
+    margin: "0 auto",
+    [theme.breakpoints.up("sm")]: {
+      maxWidth: "800px",
+    },
+  },
+  itemStyles: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    margin: "0.5rem 0",
+    padding: "0 0.5rem",
+  },
+  nameStyles: {
+    maxWidth: "200px",
+    width: "100%",
+    textOverflow: "ellipsis",
+    overflow: "hidden",
+    [theme.breakpoints.up("sm")]: {
+      maxWidth: "500px",
+    },
+  },
+}));
+
+export const usePageLogin = makeStyles((theme) => ({
+  root: {
+    maxWidth: "300px",
+    width: "100%",
+    margin: "0 auto",
+    textAlign: "center",
+    padding: "1.5rem  0.5rem",
+    [theme.breakpoints.up("sm")]: {
+      maxWidth: "800px",
+    },
+  },
+}));
+
+export const useFormStyles = makeStyles((theme) => ({
+  inputStyles: {
+    maxWidth: "290px",
+    width: "100%",
+    margin: "0.5rem auto",
+    textOverflow: "ellipsis",
+    [theme.breakpoints.up("sm")]: {
+      maxWidth: "500px",
+    },
+  },
+  buttonStyles: {
+    maxWidth: "290px",
+    width: "100%",
+    margin: "0.5rem auto",
+    [theme.breakpoints.up("sm")]: {
+      maxWidth: "500px",
+    },
   },
 }));

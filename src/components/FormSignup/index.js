@@ -16,7 +16,6 @@ import { ModulesText } from "./helper";
 
 // material ui
 import {
-  Container,
   Box,
   TextField,
   Button,
@@ -25,7 +24,6 @@ import {
   Select,
   MenuItem,
   FormControl,
-  makeStyles,
 } from "@material-ui/core";
 
 // endpoints
@@ -34,24 +32,13 @@ import { postSignUp } from "../../services/endpoints";
 // schema
 import { schemaRegister } from "../../services/formValidations";
 
-//--------------------------------------------------------
-
-const useStyles = makeStyles((theme) => ({
-  formControl: {
-    minWidth: 350,
-  },
-  colorPrimary: {
-    color: "yellow",
-  },
-  textPrimary: {
-    backgroundColor: "yellow",
-  },
-}));
+// styles
+import { useFormStyles } from "../../styles/makeStyles";
 
 //--------------------------------------------------------
 const FormSignup = () => {
+  const classes = useFormStyles();
   const [errorSignup, setErrorSignup] = useState({});
-  const classes = useStyles();
   const history = useHistory();
   const { register, handleSubmit, control, errors, reset } = useForm({
     resolver: yupResolver(schemaRegister),
@@ -70,7 +57,7 @@ const FormSignup = () => {
 
   //------------------------------------------------------
   return (
-    <Container>
+    <div>
       <Box>
         <Typography variant="h4" color="primary">
           Registro
@@ -85,80 +72,58 @@ const FormSignup = () => {
       </Box>
       <Box>
         <form onSubmit={handleSubmit(onSignup)}>
-          <Box>
-            <FormControl className={classes.formControl} margin="normal">
-              <TextField
-                name="name"
-                label="Nome"
-                variant="outlined"
-                size="small"
-                inputRef={register}
-                error={!!errors.name}
-                helperText={errors.name?.message}
-              />
-            </FormControl>
-          </Box>
-          <Box>
-            <FormControl className={classes.formControl} margin="normal">
-              <TextField
-                name="email"
-                type="email"
-                label="E-mail"
-                variant="outlined"
-                size="small"
-                inputRef={register}
-                error={!!errors.email}
-                helperText={errors.email?.message}
-              />
-            </FormControl>
-          </Box>
-          <Box>
-            <FormControl className={classes.formControl} margin="normal">
-              <TextField
-                name="password"
-                type="password"
-                label="Senha"
-                variant="outlined"
-                size="small"
-                inputRef={register}
-                error={!!errors.password}
-                helperText={errors.password?.message}
-              />
-            </FormControl>
-          </Box>
-          <Box>
-            <FormControl className={classes.formControl} margin="normal">
-              <TextField
-                multiline
-                name="bio"
-                label="Biografia"
-                variant="outlined"
-                size="small"
-                inputRef={register}
-                error={!!errors.bio}
-                helperText={errors.bio?.message}
-              />
-            </FormControl>
-          </Box>
-          <Box>
-            <FormControl className={classes.formControl} margin="normal">
-              <TextField
-                name="contact"
-                label="Contato"
-                variant="outlined"
-                size="small"
-                inputRef={register}
-                error={!!errors.contact}
-                helperText={errors.contact?.message}
-              />
-            </FormControl>
-          </Box>
+          <TextField
+            className={classes.inputStyles}
+            name="name"
+            label="Nome"
+            variant="outlined"
+            inputRef={register}
+            error={!!errors.name}
+            helperText={errors.name?.message}
+          />
+          <TextField
+            className={classes.inputStyles}
+            name="email"
+            type="email"
+            label="E-mail"
+            variant="outlined"
+            inputRef={register}
+            error={!!errors.email}
+            helperText={errors.email?.message}
+          />
+          <TextField
+            className={classes.inputStyles}
+            name="password"
+            type="password"
+            label="Senha"
+            variant="outlined"
+            inputRef={register}
+            error={!!errors.password}
+            helperText={errors.password?.message}
+          />
+          <TextField
+            className={classes.inputStyles}
+            multiline
+            name="bio"
+            label="Biografia"
+            variant="outlined"
+            inputRef={register}
+            error={!!errors.bio}
+            helperText={errors.bio?.message}
+          />
+          <TextField
+            className={classes.inputStyles}
+            name="contact"
+            label="Contato"
+            variant="outlined"
+            inputRef={register}
+            error={!!errors.contact}
+            helperText={errors.contact?.message}
+          />
           <Box>
             <FormControl
-              className={classes.formControl}
+              className={classes.inputStyles}
               variant="outlined"
-              margin="normal"
-              size="small"
               error={!!errors.course_module}
             >
               <InputLabel id="modulo-label">Módulo</InputLabel>
@@ -177,14 +142,17 @@ const FormSignup = () => {
               />
             </FormControl>
           </Box>
-          <Box m={1.5}>
-            <Button variant="contained" color="primary" type="submit">
-              Cadastrar
-            </Button>
-          </Box>
+          <Button
+            className={classes.buttonStyles}
+            variant="contained"
+            color="primary"
+            type="submit"
+          >
+            Cadastrar
+          </Button>
         </form>
       </Box>
-    </Container>
+    </div>
   );
 };
 

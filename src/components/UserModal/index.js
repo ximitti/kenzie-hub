@@ -38,7 +38,11 @@ const ModalProfile = ({ user, home = false, close = false }) => {
             <Typography variant="subtitle2" color="primary">
               Nome
             </Typography>
-            <Typography variant="body2" color="textPrimary">
+            <Typography
+              className={classes.textStyles}
+              variant="body2"
+              color="textPrimary"
+            >
               {user.name}
             </Typography>
           </Box>
@@ -46,7 +50,11 @@ const ModalProfile = ({ user, home = false, close = false }) => {
             <Typography variant="subtitle2" color="primary">
               Módulo atual
             </Typography>
-            <Typography variant="body2" color="textPrimary">
+            <Typography
+              className={classes.textStyles}
+              variant="body2"
+              color="textPrimary"
+            >
               {user.course_module}
             </Typography>
           </Box>
@@ -54,7 +62,11 @@ const ModalProfile = ({ user, home = false, close = false }) => {
             <Typography variant="subtitle2" color="primary">
               Contato
             </Typography>
-            <Typography variant="body2" color="textPrimary">
+            <Typography
+              className={classes.textStyles}
+              variant="body2"
+              color="textPrimary"
+            >
               {user.contact}
             </Typography>
           </Box>
@@ -67,7 +79,11 @@ const ModalProfile = ({ user, home = false, close = false }) => {
           </Typography>
         </Box>
         <Box bgcolor="grey.200" p={1.5} boxShadow={1}>
-          <Typography variant="body2" color="textPrimary">
+          <Typography
+            className={classes.textStyles}
+            variant="body2"
+            color="textPrimary"
+          >
             {user.bio}
           </Typography>
         </Box>

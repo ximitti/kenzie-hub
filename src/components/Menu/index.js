@@ -36,6 +36,7 @@ const MenuBar = () => {
   };
 
   const sendTo = (path) => {
+    handleClose();
     history.push(path);
   };
 
