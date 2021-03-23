@@ -69,6 +69,7 @@ const FormLogin = () => {
       <form onSubmit={handleSubmit(onLogin)}>
         <TextField
           className={classes.inputStyles}
+          margin="normal"
           variant="outlined"
           label="E-mail cadastrado"
           type="email"
@@ -79,6 +80,7 @@ const FormLogin = () => {
         />
         <TextField
           className={classes.inputStyles}
+          margin="normal"
           variant="outlined"
           label="Senha"
           type="password"

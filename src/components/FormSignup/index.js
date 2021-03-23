@@ -74,6 +74,7 @@ const FormSignup = () => {
         <form onSubmit={handleSubmit(onSignup)}>
           <TextField
             className={classes.inputStyles}
+            margin="normal"
             name="name"
             label="Nome"
             variant="outlined"
@@ -83,6 +84,7 @@ const FormSignup = () => {
           />
           <TextField
             className={classes.inputStyles}
+            margin="normal"
             name="email"
             type="email"
             label="E-mail"
@@ -93,6 +95,7 @@ const FormSignup = () => {
           />
           <TextField
             className={classes.inputStyles}
+            margin="normal"
             name="password"
             type="password"
             label="Senha"
@@ -103,6 +106,7 @@ const FormSignup = () => {
           />
           <TextField
             className={classes.inputStyles}
+            margin="normal"
             multiline
             name="bio"
             label="Biografia"
@@ -113,6 +117,7 @@ const FormSignup = () => {
           />
           <TextField
             className={classes.inputStyles}
+            margin="normal"
             name="contact"
             label="Contato"
             variant="outlined"
@@ -123,6 +128,7 @@ const FormSignup = () => {
           <Box>
             <FormControl
               className={classes.inputStyles}
+              margin="normal"
               variant="outlined"
               error={!!errors.course_module}
             >
