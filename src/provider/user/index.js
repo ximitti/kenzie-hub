@@ -36,7 +36,7 @@ export const UserProvider = ({ children }) => {
 
   const onCreateTech = async (data) => {
     try {
-      await API.post(postCreateTech, data, bearer(token));
+      await API.post(postCreateTech(), data, bearer(token));
 
       getUserData();
     } catch (e) {

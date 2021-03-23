@@ -4,14 +4,9 @@ import { useState } from "react";
 // material ui
 import { Box, Modal, IconButton } from "@material-ui/core";
 import InfoIcon from "@material-ui/icons/Info";
-import CreateIcon from "@material-ui/icons/Create";
-import AddBoxIcon from "@material-ui/icons/AddBox";
 
 // components
-import Profile from "../Profile";
-import ChangeTech from "../ChangeTech";
-import CreateTech from "../CreateTech";
-//--------------------------------------------
+import ModalProfile from "../UserModal";
 
 // -------------------------------------------
 const UserDetail = ({ user }) => {
@@ -33,7 +28,7 @@ const UserDetail = ({ user }) => {
         </IconButton>
       </Box>
       <Modal open={open} onClose={handleClose}>
-        <Profile user={user} close={handleClose} />
+        <ModalProfile user={user} close={handleClose} />
       </Modal>
     </Box>
   );

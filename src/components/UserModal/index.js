@@ -3,18 +3,18 @@ import { Box, Container, Typography, IconButton } from "@material-ui/core";
 import CancelIcon from "@material-ui/icons/Cancel";
 
 // styles
-import { useProfileStyles } from "../../styles/makeStyles";
+import { useUserModalStyles } from "../../styles/makeStyles";
 // components
 import Techs from "../Techs";
 import ModalTech from "../Modal";
 //---------------------------------------------------------------------
 
 //---------------------------------------------------------------------
-const Profile = ({ user, home = false, close = false }) => {
-  const classes = useProfileStyles();
+const ModalProfile = ({ user, home = false, close = false }) => {
+  const classes = useUserModalStyles();
 
   return (
-    <Container className={classes.root}>
+    <Container className={classes.paper}>
       <>
         {close && (
           <div style={{ position: "relative", padding: "0.3rem" }}>
@@ -95,4 +95,4 @@ const Profile = ({ user, home = false, close = false }) => {
   );
 };
 
-export default Profile;
+export default ModalProfile;

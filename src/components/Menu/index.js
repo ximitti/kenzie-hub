@@ -1,3 +1,7 @@
+// react
+import { useState } from "react";
+
+// material
 import {
   Box,
   AppBar,
@@ -5,23 +9,31 @@ import {
   MenuItem,
   Typography,
   Divider,
+  Menu,
 } from "@material-ui/core/";
-import { makeStyles } from "@material-ui/core/styles";
+import { useMenuStyles } from "../../styles/makeStyles";
+import MenuIcon from "@material-ui/icons/Menu";
+
+// react router dom
 import { useHistory } from "react-router-dom";
 
 // provider
 import { useAuth } from "../../provider/authentication";
 //----------------------------------------------------------------------
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-}));
 //----------------------------------------------------------------------
-const Menu = () => {
+const MenuBar = () => {
   const { isAuth, setIsAuth, setToken } = useAuth();
-  const classes = useStyles();
+  const classes = useMenuStyles();
   const history = useHistory();
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const sendTo = (path) => {
     history.push(path);
@@ -36,9 +48,9 @@ const Menu = () => {
 
   return (
     <Box className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
-          <Box display="flex" justifyContent="flex-start" minWidth="165px">
+          <Box className={classes.menuDesktop}>
             {isAuth ? (
               <>
                 <MenuItem onClick={() => sendTo("/home")}>Home</MenuItem>
@@ -55,7 +67,38 @@ const Menu = () => {
               Lista de usuários
             </MenuItem>
           </Box>
-          <Box flexGrow={1} pr="150px">
+          <Box className={classes.menuMobile}>
+            <MenuIcon
+              onClick={handleClick}
+              aria-controls="simple-menu"
+              aria-haspopup="true"
+            />
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              {isAuth ? (
+                <>
+                  <MenuItem onClick={() => sendTo("/home")}>Home</MenuItem>
+                  <MenuItem onClick={handleCloseApplication}>Sair</MenuItem>
+                </>
+              ) : (
+                <>
+                  <MenuItem onClick={() => sendTo("/")}>Login</MenuItem>
+                  <MenuItem onClick={() => sendTo("/signup")}>
+                    Registro
+                  </MenuItem>
+                </>
+              )}
+              <MenuItem onClick={() => sendTo("/userlist")}>
+                Lista de usuários
+              </MenuItem>
+            </Menu>
+          </Box>
+          <Box className={classes.menuTitle}>
             <Typography variant="h6">KENZIE HUB</Typography>
           </Box>
         </Toolbar>
@@ -64,4 +107,4 @@ const Menu = () => {
   );
 };
 
-export default Menu;
+export default MenuBar;

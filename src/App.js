@@ -1,7 +1,9 @@
-import "./App.css";
-
 // components
-import Menu from "./components/Menu";
+import MenuBar from "./components/Menu";
+
+// material ui
+import { theme } from "./styles/theme";
+import { ThemeProvider } from "@material-ui/core";
 
 // routes
 import Routes from "./routes";
@@ -9,12 +11,12 @@ import Routes from "./routes";
 //-----------------------------------------------
 const App = () => {
   return (
-    <div className="App">
-      <Menu />
-      <header className="App-header">
+    <main>
+      <ThemeProvider theme={theme}>
+        <MenuBar />
         <Routes />
-      </header>
-    </div>
+      </ThemeProvider>
+    </main>
   );
 };
 

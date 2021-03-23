@@ -1,11 +1,9 @@
 // react
-import { useState } from "react";
 
 // react hook form
 import { useForm, Controller } from "react-hook-form";
 
 // material ui
-import { makeStyles } from "@material-ui/core/styles";
 import {
   Box,
   Button,
@@ -16,35 +14,16 @@ import {
   Typography,
 } from "@material-ui/core";
 
+// styles
+import { useModalStyles } from "../../styles/makeStyles";
+
 // providers
 import { useUser } from "../../provider/user";
-//--------------------------------------------
-const getModalStyle = () => {
-  return {
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-  };
-};
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    position: "absolute",
-    width: 400,
-    backgroundColor: theme.palette.background.paper,
-    border: "2px solid #3f51b6",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-  formControl: {
-    minWidth: 250,
-  },
-}));
 //--------------------------------------------
 const ChangeTech = ({ close, tech }) => {
-  const classes = useStyles();
+  const classes = useModalStyles();
   const { onChangeTech } = useUser();
-  const [modalStyle] = useState(getModalStyle);
   const { handleSubmit, control } = useForm();
 
   const onSubmit = (data) => {
@@ -54,7 +33,7 @@ const ChangeTech = ({ close, tech }) => {
   };
 
   return (
-    <Box style={modalStyle} className={classes.paper}>
+    <Box className={classes.paper}>
       <Typography variant="h5">Alterar experiência</Typography>
       <Box>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -78,7 +57,7 @@ const ChangeTech = ({ close, tech }) => {
               }
             />
           </FormControl>
-          <Box m={1.5}>
+          <Box>
             <Button variant="contained" color="primary" type="submit">
               Alterar
             </Button>
